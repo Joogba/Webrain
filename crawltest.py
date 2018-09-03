@@ -1,17 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-import bs4
-import sys
+# from selenium.webdriver.support.wait import WebDriverWait
 import time
 
-#멘더빌리티 로그인
+# 멘더빌리티 로그인
+
+
 def login(user_name, user_password):
     driver.find_element_by_xpath('//input[@tabindex="1"]').send_keys(user_name)
 
     driver.find_element_by_xpath('//input[@tabindex="2"]').send_keys(user_password)
 
     driver.find_element_by_xpath('//a[@tabindex="4"]').click()
+
 
 # 워크시트 체크
 def check_worksheet(cbx1, cbx2, cbx3, cbx4, cbx5, cbx_All = False, cbx_None = False):
@@ -38,10 +39,12 @@ def check_worksheet(cbx1, cbx2, cbx3, cbx4, cbx5, cbx_All = False, cbx_None = Fa
 
     driver.find_element_by_class_name('finishTestBadge').click()
 
+
 # 프로그레스 테스트 소제목 크롤링
 def get_progress_test_small_title():
     for a in driver.find_elements(By.XPATH, '//div[@class="testH"]/span'):
         print(a.text)
+
 
 def get_question_category_text():
     header_div = driver.find_element_by_xpath('//div[@aria-expanded="true"]')
@@ -51,6 +54,7 @@ def get_question_category_text():
         return 'no smalltitle'
     else:
         return text
+
 
 # 소제목마다 질문 리스트 얻기
 def get_progress_test_question_list(category_number):
@@ -67,6 +71,7 @@ def get_progress_test_question_list(category_number):
         progress_question_information['frequency'].append(question_td_list[2]) # 빈도입력 tr
         progress_question_information['question_category_number'].append(category_number)
 
+
 def click_open_question_get_list_button(): # 질문 열고 정보 얻기
     count = 0
     for a in driver.find_elements_by_xpath('//div[@role="tab"]'):
@@ -75,6 +80,7 @@ def click_open_question_get_list_button(): # 질문 열고 정보 얻기
         time.sleep(2)
         get_progress_test_question_list(count)
         count += 1
+
 
 def print_question_info(): # 질문 정보 출력
     small = 'a'
@@ -88,6 +94,7 @@ def print_question_info(): # 질문 정보 출력
         print(progress_question_information['text'][i])
         print(progress_question_information['id_num'][i])
         print(progress_question_information['question_category_number'][i])
+
 
 def click_frequency_button(frequency_list): #빈도 입력
     question_count = 0
@@ -105,6 +112,7 @@ def click_frequency_button(frequency_list): #빈도 입력
             path = 'div[%d]' % question_list[question_count]
             question_td_list[2].find_element_by_xpath(path).click()
             question_count += 1
+
 
 if __name__ == "__main__":
 
